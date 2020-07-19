@@ -1,7 +1,14 @@
+<!--
+ * @Author: Shuai Wang
+ * @Github: https://github.com/wsustcid
+ * @Version: 1.0.0
+ * @Date: 1970-01-01 08:00:00
+ * @LastEditTime: 2020-05-17 15:34:12
+--> 
 # Dataset Wiki
 In an attempt to cleanup the data release practices of the Udacity Self-Driving Car team, we will start maintaining this wiki of data we have uploaded. Issues persist throughout many of the datasets, so we will be working backwards to catalog legacy data and unify the naming methodology. Please feel free to add to this list and submit a PR.
 
-Check out [udacity-driving-reader](https://github.com/rwightman/udacity-driving-reader) for some easy-to-use scripts to read or export to CSV or TensorFlow.
+***Check out [udacity-driving-reader](https://github.com/rwightman/udacity-driving-reader) for some easy-to-use scripts to read or export to CSV or TensorFlow.***
 
 ## Current Releases
 These releases should be issue/error free and comply with the new naming schema.
@@ -16,12 +23,12 @@ These releases should be issue/error free and comply with the new naming schema.
 | Name | Purpose |
 |:----:|:-------:|
 | [CH3_001](https://github.com/udacity/self-driving-car/tree/master/datasets/CH3) | Northbound and Southbound drives on El Camino with IMU positioning |
-| [CH3_002](https://github.com/udacity/self-driving-car/tree/master/datasets/CH3) | Continuous North/South on El Camino with IMU positioning and HDL-32E LIDAR |
+| [CH3_002](https://github.com/udacity/self-driving-car/tree/master/datasets/CH3) | Continuous North/South on El Camino with IMU positioning and **HDL-32E LIDAR** |
 
 #### Misc. Driving Data
 | Name | Purpose |
 |:----:|:-------:|
-| [CHX_001](https://github.com/udacity/self-driving-car/tree/master/datasets/CHX) | Lap around block at Udacity office with new HDL-32E LIDAR |
+| [CHX_001](https://github.com/udacity/self-driving-car/tree/master/datasets/CHX) | Lap around block at Udacity office with **new HDL-32E LIDAR** |
 
 ## Legacy Data
 

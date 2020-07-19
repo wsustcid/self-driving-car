@@ -5,6 +5,16 @@ import csv
 import os
 import argparse
 
+"""
+Pipeline:
+1. compute optical flow between two images
+2. compute mean values of 7 optical flow images (compute next 7 with overlapping)
+3. covert optical value into HSV
+4. covert HSV to bgr and save to local file
+
+We can use lstm instead of compute mean optical flow.
+"""
+
 DATA_DIR = '/vol/data'
 INPUT_CSV = 'train_center.csv'
 WINDOW_SIZE = 7

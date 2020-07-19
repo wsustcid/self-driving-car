@@ -9,19 +9,19 @@ https://medium.com/@maccallister.h/challenge-2-submission-guidelines-284ce6641c4
 
 # Running the Code in this Repository
 Training a Model: Once you have the training/validation data in the /dataset directory with the structure:
-```
+```python
 camera.csv  center/  left/  right/  steering.csv
 ```
 You will need epoch_data.py, epoch_model.py and epoch_test.py. Run the following command on CPU or GPU to start training a model:
-```
+```python
 python epoch_test.py --dataset dataset/ --model cnn --nb-epoch 50 --resized-image-height 128 --resized-image-width 128
 ```
 Testing a Model for Round 2: Once you have the test data in the /testset directory with the structure:
-```
+```python
 camera.csv  center/  final_example.csv
 ```
 You will need epoch_data_hmb.py, epoch_model.py and epoch_test_hmb.py. Run the following command on CPU or GPU to test a model:
-```
+```python
 python epoch_test_HMB.py --dataset testset/ --model cnn --nb-epoch 1 --resized-image-height 128 --resized-image-width 128
 ```
 # Acknowledgements 
@@ -50,10 +50,12 @@ It sounded like a few of the teams had personal GPU setups, but my setup was pre
   - https://keras.io/backend/
 
 # Objective
-The basic goal was to use data collected from Udacity’s Self Driving Car to build a model that would predict the steering angles for the vehicle. This problem was well suited for Convolutional Neural Networks (CNNs) that take in the forward facing images from the vehicle and output a steering angle. This Challenge can be treated as a classification or regression problem. After some initial trials with classification (binning the steering angles into classes), regression proved more successful and easier to implement for me. A model's success was measured using the root mean square (RMS) error of the predicted steering versus the actual human steering. 
+The basic goal was to use data collected from Udacity’s Self Driving Car to build a model that would predict the steering angles for the vehicle. This problem was well suited for Convolutional Neural Networks (CNNs) that take in the forward facing images from the vehicle and output a steering angle. This Challenge can be treated as a classification or regression problem. ***After some initial trials with classification (binning the steering angles into classes), regression proved more successful and easier to implement for me.*** A model's success was measured using the root mean square (RMS) error of the predicted steering versus the actual human steering. 
 
 # Data
-The data collected from the Udacity car was images (mostly .jpg) from 3 cameras (left, center, right spaced 20 inches apart) and steering angles. There are several different data sets, but in the end I only ended up using the final two as some of the camera issues had been worked out by that point. The first one (I will refer to as Dataset 1) is a little over an hour of driving from El Camino Real and the second (Dataset 2) is a combination of highway driving and curvy driving over Highway 92 from San Mateo to Half Moon Bay. The links to the torrents for the datasets are here: 
+The data collected from the Udacity car was images (mostly .jpg) from 3 cameras (left, center, right **spaced 20 inches (50.8cm)** apart) and steering angles. 
+
+There are several different data sets, but in the end I only ended up using the final two as some of the camera issues had been worked out by that point. The first one (I will refer to as Dataset 1) is a little over an hour of driving from El Camino Real and the second (Dataset 2) is a combination of highway driving and curvy driving over Highway 92 from San Mateo to Half Moon Bay. The links to the torrents for the datasets are here: 
 
 - Dataset 1: https://github.com/udacity/self-driving-car/tree/master/datasets
 - Dataset 2: https://github.com/udacity/self-driving-car/tree/master/datasets/CH2  (I would start with this one)
@@ -75,7 +77,9 @@ Just for clarity, here are all the steps that I took to get the data:
 If you make it through that process, then you are at least half way there!
 
 ## Exploration
-Each image and steering angle is associated with a certain timestamp. I copied dolaameng’s approach, which was to average the steering angles within each timestamp. The datasets were also somewhat cleaned by Udacity (stoplights and lane changes removed) so the timestamps were not continuous. I wrote a script (data_explore.py) that plotted all of the steering angles for each consecutive series of timestamps, so that I could further clean/select my training data.
+Each image and steering angle is associated with a certain timestamp. I copied dolaameng’s approach, which was to average the steering angles within each timestamp. The datasets were also somewhat cleaned by Udacity (stoplights and lane changes removed) so the timestamps were not continuous. 
+
+I wrote a script (data_explore.py) that plotted all of the steering angles for each consecutive series of timestamps, so that I could further clean/select my training data.
 ![alt tag](Steering1.png)
 
 # Data Processing and Augmentation
@@ -96,14 +100,14 @@ I also applied the following approaches:
   1.	Cropped the camera images to be 280 X 640 (removed most of the image above the horizon line).
   2.	Resized the images to 128 X 128 (Will discuss more in the model section)
   3.	Horizontal image flipping (Sign of steering angle also needs to be flipped)
-  4.	Left/Right camera shifts (Use images from the left/right camera, but adjust the steering angle to move back to center within 2 seconds)
+  4.	**Left/Right camera shifts (Use images from the left/right camera, but adjust the steering angle to move back to center within 2 seconds)**
   5.	Small rotations with no modification to steering angle (To simulate jittering of camera)
 
 Each of these techniques helped with overfitting and gave incremental improvements to my results.
 
 # Model
 This isn’t the most exciting architecture, but after trying a lot of different CNN models including transfer learning and NVIDIA’s model (https://devblogs.nvidia.com/parallelforall/deep-learning-self-driving-cars/), the best results that I was able to produce for this challenge was with the following simple structure. The input image size was 128 X 128 X 3. It is similar to a VGG style with 3 X 3 conv layers followed by 2 X 2 max pooling with stride 2 and increasingly aggressive dropout towards the top layers. I’ve used similar models for other applications in the past as my ‘baseline’, but with a little tuning this one ended up performing best. 
-```
+```python
 x = Convolution2D(32, 3, 3, activation='relu', border_mode='same')(img_input)
 x = MaxPooling2D((2, 2), strides=(2, 2))(x)
 x = Dropout(0.25)(x)

@@ -23,6 +23,7 @@ class DataReader(object):
         with open('interpolated_center.csv') as f:
             reader = csv.DictReader(f)
             for row in reader:
+                # balance the data distribution (crop angle data near 0 )
                 angle = float(row['steering_angle'])
                 if angle > 0.1 or angle < -0.1 and random.random() > 0.2:
                     xs.append(DATA_DIR + 'training/center/flow_7_cart/' + row['frame_id'] + FILE_EXT)

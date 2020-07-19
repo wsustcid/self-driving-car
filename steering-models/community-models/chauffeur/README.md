@@ -1,3 +1,11 @@
+<!--
+ * @Author: Shuai Wang
+ * @Github: https://github.com/wsustcid
+ * @Version: 1.0.0
+ * @Date: 1970-01-01 08:00:00
+ * @LastEditTime: 2020-05-30 20:49:56
+ * @Description:  
+--> 
 This is a snapshot of the repository github.com/emef/sdc
 
 -----
@@ -39,7 +47,6 @@ A dataset directory should have this structure:
 **Note that the image numpy files are 1-indexed.**
 
 ### Models
-
 We added some abstraction on top of keras models to simplify training
 and evaluating sdc datasets, saving and loading, nesting models for
 transfer learning, etc.
